@@ -1,6 +1,15 @@
 include config.mk
 
-DIRS=lib apps client plugins src
+DIRS=lib src
+ifeq ($(WITH_CLIENT_TOOLS),yes)
+DIRS+=client
+endif
+ifeq ($(WITH_APPS),yes)
+DIRS+=apps
+endif
+ifeq ($(WITH_PLUGINS),yes)
+DIRS+=plugins
+endif
 DOCDIRS=man
 DISTDIRS=man
 DISTFILES= \

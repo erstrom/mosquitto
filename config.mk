@@ -120,6 +120,15 @@ WITH_JEMALLOC:=no
 # probably of no particular interest to end users.
 WITH_XTREPORT=no
 
+# Comment out to disable the client tools mosquitto_sub and mosquitto_pub.
+WITH_CLIENT_TOOLS:=yes
+
+# Build apps
+WITH_APPS:=yes
+
+# Build plugins
+WITH_PLUGINS:=yes
+
 # =============================================================================
 # End of user configuration
 # =============================================================================
