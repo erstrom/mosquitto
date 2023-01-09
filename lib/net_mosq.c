@@ -799,6 +799,14 @@ static int net__init_ssl_ctx(struct mosquitto *mosq)
 							return MOSQ_ERR_TLS;
 						}
 						ui_method = NULL;
+					}else if(mosq->tls_engine_pin_string){
+						if(!ENGINE_ctrl_cmd_string(engine, ENGINE_PIN, mosq->tls_engine_pin_string, 0)){
+							log__printf(mosq, MOSQ_LOG_ERR, "Error: Unable to set engine pin string");
+							ENGINE_FINISH(engine);
+							net__print_ssl_error(mosq);
+							return MOSQ_ERR_TLS;
+						}
+						ui_method = NULL;
 					}
 					pkey = ENGINE_load_private_key(engine, mosq->tls_keyfile, ui_method, NULL);
 					if(!pkey){

@@ -331,6 +331,18 @@ int mosquitto_string_option(struct mosquitto *mosq, enum mosq_opt_t option, cons
 #endif
 			break;
 
+
+		case MOSQ_OPT_TLS_ENGINE_PIN_STRING:
+#ifdef WITH_TLS
+			if(!value || (value[0] == 0)) return MOSQ_ERR_INVAL;
+			mosq->tls_engine_pin_string = mosquitto__strdup(value);
+			return MOSQ_ERR_SUCCESS;
+#else
+			return MOSQ_ERR_NOT_SUPPORTED;
+#endif
+			break;
+
+
 		case MOSQ_OPT_TLS_ALPN:
 #ifdef WITH_TLS
 			mosq->tls_alpn = mosquitto__strdup(value);

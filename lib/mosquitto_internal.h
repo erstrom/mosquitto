@@ -263,6 +263,7 @@ struct mosquitto {
 	char *tls_psk_identity;
 	char *tls_engine;
 	char *tls_engine_kpass_sha1;
+	char *tls_engine_pin_string;
 	char *tls_alpn;
 	int tls_cert_reqs;
 	bool tls_insecure;
