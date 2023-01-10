@@ -179,19 +179,21 @@ int mosquitto_tls_set(struct mosquitto *mosq, const char *cafile, const char *ca
 	mosquitto__free(mosq->tls_keyfile);
 	mosq->tls_keyfile = NULL;
 	if(keyfile){
-		fptr = mosquitto__fopen(keyfile, "rt", false);
-		if(fptr){
-			fclose(fptr);
-		}else{
-			mosquitto__free(mosq->tls_cafile);
-			mosq->tls_cafile = NULL;
+		if(mosq->tls_keyform == mosq_k_pem){
+			fptr = mosquitto__fopen(keyfile, "rt", false);
+			if(fptr){
+				fclose(fptr);
+			}else{
+				mosquitto__free(mosq->tls_cafile);
+				mosq->tls_cafile = NULL;
 
-			mosquitto__free(mosq->tls_capath);
-			mosq->tls_capath = NULL;
+				mosquitto__free(mosq->tls_capath);
+				mosq->tls_capath = NULL;
 
-			mosquitto__free(mosq->tls_certfile);
-			mosq->tls_certfile = NULL;
-			return MOSQ_ERR_INVAL;
+				mosquitto__free(mosq->tls_certfile);
+				mosq->tls_certfile = NULL;
+				return MOSQ_ERR_INVAL;
+			}
 		}
 		mosq->tls_keyfile = mosquitto__strdup(keyfile);
 		if(!mosq->tls_keyfile){
